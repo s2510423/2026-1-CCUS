@@ -1,2 +1,2 @@
-# 2026-1-PCC
-OpenFOAM 소프트웨어를 활용한 CFD(Computational Fluid Dynamics, 전산유체역학) 시뮬레이션 기반 PCC(Post-Combustion Capture, 연소 후 포집) 방식의 이산화탄소 포집 공정 내 유동 모델링 연구
+# 2026-1-CCUS
+제철 슬래그 수재화 현열로 인한 수증기 폭발 무동력 양수 기반 이산화탄소 포집 및 소수력 발전 복합 공정의 설계 및 OpenFOAM 소프트웨어 CFD 기반 위험성 관리에 대한 연구
