@@ -106,3 +106,16 @@ compressibleInterPhaseTransportModel turbulence
 
 #include "createMRF.H"
 #include "createFvOptions.H"
+
+// Lee 모델 상수들
+dimensionedScalar Tsat("Tsat", dimTemperature, 373.15); // 포화온도
+dimensionedScalar L("L", dimEnergy/dimMass, 2257e3);    // 잠열
+dimensionedScalar coeff("coeff", dimless/dimTime, 0.1); // 증발 계수 (작게 시작!)
+
+// mDot(증발량)을 눈으로 확인하기 위한 필드 변수
+volScalarField mDot
+(
+    IOobject("mDot", runTime.timeName(), mesh, IOobject::NO_READ, IOobject::AUTO_WRITE),
+    mesh,
+    dimensionedScalar("mDot", dimMass/dimVolume/dimTime, 0)
+);

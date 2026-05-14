@@ -1,5 +1,5 @@
 EXE_INC = \
-    -I$(FOAM_SOLVERS)/multiphase/VoF \
+    -I.\
     -I$(FOAM_SOLVERS)/multiphase/compressibleInterFoam/twoPhaseMixtureThermo \
     -I$(FOAM_SRC)/finiteVolume/lnInclude \
     -I$(FOAM_SRC)/meshTools/lnInclude \

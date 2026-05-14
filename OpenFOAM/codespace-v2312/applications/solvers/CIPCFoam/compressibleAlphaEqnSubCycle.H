@@ -1,4 +1,5 @@
 tmp<surfaceScalarField> talphaPhi1(alphaPhi10);
+volScalarField& T = mixture.T(); // 온도 필드 참조
 
 if (nAlphaSubCycles > 1)
 {
@@ -42,6 +43,8 @@ if (nAlphaSubCycles > 1)
         !(++alphaSubCycle).end();
     )
     {
+        // 루프 돌 때마다 현재의 alpha1 값을 바탕으로 mDot 갱신
+        mDot = coeff * rho1 * pos(alpha1 - 0.001) * max(T - Tsat, dimensionedScalar("0", dimTemperature, 0)) / Tsat;
         #include "alphaEqn.H"
         talphaPhi1.ref() += (runTime.deltaT()/totalDeltaT)*alphaPhi10;
         rhoPhiSum += (runTime.deltaT()/totalDeltaT)*rhoPhi;
@@ -51,6 +54,7 @@ if (nAlphaSubCycles > 1)
 }
 else
 {
+    mDot = coeff * rho1 * pos(alpha1 - 0.001) * max(T - Tsat, dimensionedScalar("0", dimTemperature, 0)) / Tsat;
     #include "alphaEqn.H"
 }
 
