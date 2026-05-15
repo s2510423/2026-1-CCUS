@@ -1,0 +1,100 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      snappyHexMeshDict;
+}
+
+castellatedMesh true;
+snap            true;
+addLayers       true;
+
+geometry
+{
+    Main.stl
+    {
+        type triSurfaceMesh;
+        name slag_surface;
+        regions
+        {
+            slag   { name slag; }
+            outlet { name outlet; }
+            inlet  { name inlet; }
+            wall   { name wall; }
+        }
+    }
+};
+
+castellatedMeshControls
+{
+    maxLocalCells 1000000;
+    maxGlobalCells 2000000;
+    minRefinementCells 10;
+    maxLoadUnbalance 0.10;
+    nCellsBetweenLevels 3;
+
+    features
+    (
+        { file "Main.eMesh"; level 2; } // 특징선 추출 파일 이름 확인!
+    );
+
+    refinementSurfaces
+    {
+        slag_surface
+        {
+            level (2 3); // 슬래그 근처는 좀 더 조밀하게
+            regions
+            {
+                slag   { level (3 3); } 
+                outlet { level (2 2); }
+                inlet  { level (2 2); }
+                wall   { level (2 2); }
+            }
+        }
+    }
+
+    refinementRegions {}
+
+    // 중요: 유체 영역 내부의 한 점을 정확히 찍으세요!
+    locationInMesh (0, 0, 10); 
+
+    allowFreeStandingZoneFaces true;
+}
+
+snapControls
+{
+    nSmoothPatch 3;
+    tolerance 2.0;
+    nSolveIter 30;
+    nRelaxIter 5;
+}
+
+addLayersControls   
+{
+    relativeSizes true;
+    layers
+    {
+        "wall|slag" // 벽과 슬래그에 레이어 추가
+        {
+            nSurfaceLayers 3;
+        }
+    }
+    expansionRatio 1.2;
+    finalLayerThickness 0.5;
+    minThickness 0.1;
+}
+
+meshQualityControls
+{
+    maxNonOrth 65;
+    maxBoundarySkewness 20;
+    maxInternalSkewness 4;
+    maxConcave 80;
+    minVol 1e-13;
+    minDeterminant 0.001;
+    minFaceWeight 0.02;
+    minVolRatio 0.01;
+}
+
+mergeTolerance 1e-6;

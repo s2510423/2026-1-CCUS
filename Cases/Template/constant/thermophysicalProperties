@@ -1,0 +1,62 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+\*---------------------------------------------------------------------------*/
+FoamFile { version 2.0; format ascii; class dictionary; object thermophysicalProperties; }
+
+// compressible 모델은 각 상의 thermoType을 정의해야 합니다.
+mixture
+{
+    model   pureMixture;
+    phases  (water gas);
+
+    water
+    {
+        thermoType
+        {
+            type            heRhoThermo; // 에너지식 기반
+            mixture         pureMixture;
+            transport       const;
+            thermo          hConst;
+            equationOfState perfectFluid; // 물은 perfectFluid
+            specie          specie;
+            energy          sensibleEnthalpy;
+        }
+        mixture
+        {
+            specie { nMoles 1; molWeight 18.0153; }
+            thermo { Cp 4180; Hf 0; }
+            transport { mu 0.001; Pr 7.0; }
+            equationOfState { R 461.5; rho0 1000; } 
+        }
+    }
+
+    gas
+    {
+        thermoType
+        {
+            type            heRhoThermo;
+            mixture         pureMixture;
+            transport       const;
+            thermo          hConst;
+            equationOfState perfectGas; // 수증기는 perfectGas
+            specie          specie;
+            energy          sensibleEnthalpy;
+        }
+        mixture
+        {
+            specie { nMoles 1; molWeight 18.0153; }
+            thermo { Cp 2000; Hf 2.5e6; } // Hf에 잠열 반영
+            transport { mu 1.8e-05; Pr 1.0; }
+            equationOfState { R 461.5; }
+        }
+    }
+}
+
+// Lee 모델 세팅 (본인 코드의 검색어와 일치해야 함)
+phaseChangeModel Lee;
+LeeCoeffs
+{
+    r       100;
+    Tsat    373.15;
+}

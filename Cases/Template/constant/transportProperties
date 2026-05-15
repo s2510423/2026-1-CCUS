@@ -1,0 +1,14 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  2312
+\*---------------------------------------------------------------------------*/
+FoamFile { version 2.0; format ascii; class dictionary; object transportProperties; }
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+phases (water gas);
+
+water { transportModel Newton; nu 1e-06; rho 1000; }
+gas   { transportModel Newton; nu 1.5e-05; rho 1.2; }
+sigma 0.07;
