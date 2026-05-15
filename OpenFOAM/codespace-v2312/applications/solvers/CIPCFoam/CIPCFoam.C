@@ -76,7 +76,6 @@ int main(int argc, char *argv[])
     #include "createFields.H"
 
     volScalarField& p = mixture.p();
-    volScalarField& T = mixture.T();
     const volScalarField& psi1 = mixture.thermo1().psi();
     const volScalarField& psi2 = mixture.thermo2().psi();
 
