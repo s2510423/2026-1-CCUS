@@ -35,9 +35,12 @@ castellatedMeshControls
     nCellsBetweenLevels 3;
 
     features
-    (
-        { file "Main.eMesh"; level 2; } // 특징선 추출 파일 이름 확인!
-    );
+        (
+            {
+                file "Main.eMesh"; // 아까 추출한 파일 이름과 일치 확인!
+                level 3;           // 특징선 근처는 레벨 3으로 더 조밀하게
+            }
+        );
 
     refinementSurfaces
     {
