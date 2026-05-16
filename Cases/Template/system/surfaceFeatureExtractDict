@@ -14,17 +14,51 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-Main.stl
+slag.stl
 {
     extractionMethod    extractFromSurface;
     includedAngle       150; 
-    
     subsetFeatures
     {
         nonManifoldEdges       no;
         openEdges              yes;
     }
+    writeObj            yes;
+}
 
+outlet.stl
+{
+    extractionMethod    extractFromSurface;
+    includedAngle       150; 
+    subsetFeatures
+    {
+        nonManifoldEdges       no;
+        openEdges              yes;
+    }
+    writeObj            yes;
+}
+
+inlet.stl
+{
+    extractionMethod    extractFromSurface;
+    includedAngle       150; 
+    subsetFeatures
+    {
+        nonManifoldEdges       no;
+        openEdges              yes;
+    }
+    writeObj            yes;
+}
+
+wall.stl
+{
+    extractionMethod    extractFromSurface;
+    includedAngle       150; 
+    subsetFeatures
+    {
+        nonManifoldEdges       no;
+        openEdges              yes;
+    }
     writeObj            yes;
 }
 
