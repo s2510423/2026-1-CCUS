@@ -16,13 +16,35 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-1
+4
 (
-    allBoundary
+    slag
     {
-        type            patch;
-        nFaces          8400;
-        startFace       144300;
+        type            wall;
+        inGroups        1(wall);
+        nFaces          3056;
+        startFace       283883;
+    }
+    outlet
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          308;
+        startFace       286939;
+    }
+    inlet
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          308;
+        startFace       287247;
+    }
+    wall
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          31298;
+        startFace       287555;
     }
 )
 

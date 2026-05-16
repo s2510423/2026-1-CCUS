@@ -10,15 +10,12 @@ FoamFile
     version     2.0;
     format      ascii;
     arch        "LSB;label=32;scalar=64";
-    class       uniformDimensionedScalarField;
-    location    "1e-05/polyMesh";
-    object      level0Edge;
+    class       regIOobject;
+    location    "constant/polyMesh";
+    object      cellZones;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 1 0 0 0 0 0];
-value           2;
-
-
+0()
 
 // ************************************************************************* //
