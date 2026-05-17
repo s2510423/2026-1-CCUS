@@ -8,10 +8,10 @@ FoamFile { version 2.0; format ascii; class dictionary; object fvSolution; }
 
 solvers
 {
-    "alpha.water.*"
+    "alpha.*"
     {
-        nAlphaCorr      1;
-        nAlphaSubCycles 2;
+        nAlphaCorr      4;
+        nAlphaSubCycles 4;
         cAlpha          1;
     }
 
@@ -50,12 +50,13 @@ relaxationFactors
     fields
     {
         p_rgh           0.3;
+        p_rghFinal      1.0;
     }
     equations
     {
-        U               0.7;
-        T               0.7;
-        k               0.7;
-        omega           0.7;
+        "U.*"               0.5;
+        "T.*"               0.5;
+        "k.*"               0.7;
+        "omega.*"           0.7;
     }
 }

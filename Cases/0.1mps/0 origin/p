@@ -1,0 +1,25 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      p;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [1 -1 -2 0 0 0 0];
+
+// 🚨 절대진공 0에서 1기압(대기압)으로 현실화! 기체 밀도가 이제 0이 안 됨!
+internalField   uniform 101325;
+
+boundaryField
+{
+    // 컴프레서블 솔버에서 p는 p_rgh에 의해 계산되므로 경계는 calculated가 맞음, 값만 1기압으로 통일!
+    inlet   { type calculated; value $internalField; }
+    outlet  { type calculated; value $internalField; }
+    wall    { type calculated; value $internalField; }
+}

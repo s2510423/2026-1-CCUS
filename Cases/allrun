@@ -1,0 +1,1 @@
+decomposePar && mpirun -np 10 CIPCFoam -parallel > log.CIPCFoam 2>&1s
