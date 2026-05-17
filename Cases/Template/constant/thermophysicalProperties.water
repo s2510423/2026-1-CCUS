@@ -28,7 +28,6 @@ mixture
         nMoles          1;
         molWeight       18.0153;
     }
-    // 🚨 오픈폼이 애타게 찾던 'thermodynamics'가 바로 이 블록임!
     thermodynamics
     {
         Cp              4180;
@@ -41,7 +40,8 @@ mixture
     }
     equationOfState
     {
-        R               461.5;
+        R               3000;
         rho0            1000;
+        p0              100000;
     }
 }

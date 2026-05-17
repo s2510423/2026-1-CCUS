@@ -38,7 +38,12 @@ PIMPLE
     nOuterCorrectors  2; // 상변화 팽창 대응을 위해 2회 이상 권장
     nCorrectors       2;
     nNonOrthogonalCorrectors 1;
+    
+    limitTemperature  true;
+    TMin              200;  
+    TMax              2500; 
 }
+
 
 relaxationFactors
 {

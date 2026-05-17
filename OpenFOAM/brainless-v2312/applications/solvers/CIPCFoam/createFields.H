@@ -36,6 +36,19 @@ twoPhaseMixtureThermo mixture(U, phi);
 volScalarField& alpha1(mixture.alpha1());
 volScalarField& alpha2(mixture.alpha2());
 
+Info<< "Forcing registry of transportProperties for turbulence model\n" << endl;
+IOdictionary transportProperties
+(
+    IOobject
+    (
+        "transportProperties",           // 메모리 창고(objectRegistry)에 등록될 이름
+        runTime.constant(),              // 파일 위치 (constant 폴더)
+        mesh,                            // 메쉬 참조
+        IOobject::MUST_READ_IF_MODIFIED, // 파일이 있으면 무조건 읽어라
+        IOobject::NO_WRITE               // 연산 중에 파일에 다시 쓰지는 않음
+    )
+);
+
 Info<< "Reading thermophysical properties\n" << endl;
 
 const volScalarField& rho1 = mixture.thermo1().rho();

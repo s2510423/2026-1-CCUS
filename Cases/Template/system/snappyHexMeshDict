@@ -20,7 +20,6 @@ addLayers       false; // ⚠️ 극한 조밀도에서 레이어까지 켜면 �
 
 geometry
 {
-    slag.stl   { type triSurfaceMesh; name slag; }
     outlet.stl { type triSurfaceMesh; name outlet; }
     inlet.stl  { type triSurfaceMesh; name inlet; }
     wall.stl   { type triSurfaceMesh; name wall; }
@@ -38,40 +37,31 @@ castellatedMeshControls
     features
     (
         // 💡 특징선(모서리)도 칼날처럼 서게 레벨 4로 격상
-        { file "slag.eMesh";   level 4; }
-        { file "outlet.eMesh"; level 2; }
-        { file "inlet.eMesh";  level 2; }
-        { file "wall.eMesh";   level 3; }
+        { file "outlet.eMesh"; level 3; }
+        { file "inlet.eMesh";  level 3; }
+        { file "wall.eMesh";   level 4; }
     );
 
     resolveFeatureAngle 30;
 
     refinementSurfaces
     {
-        // 🔥 슬래그 근처는 거의 현미경 수준(레벨 4~5)으로 극한 조밀화
-        slag
-        {
-            level (4 5); 
-        }
-        // 🔥 폭발 압력을 견뎌야 하는 벽면도 촘촘하게 레벨 3~4 세팅
         wall
+        {
+            level (4 5);
+        }
+        outlet
         {
             level (3 4);
         }
-        // 입출구는 연산력 아끼기 위해 기본 유지
-        outlet
-        {
-            level (2 2);
-        }
         inlet
         {
-            level (2 2);
+            level (3 4);
         }
     }
 
     refinementRegions {}
 
-    // ⚠️ 최고 중요: 이 좌표가 실린더 내부 공중(유체 영역)에 정확히 떠 있어야 코어 덤프 안 납니다!
     locationInMesh (0 0 10); 
 
     allowFreeStandingZoneFaces true;

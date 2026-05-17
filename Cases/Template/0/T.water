@@ -22,13 +22,7 @@ internalField   uniform 300;
 
 boundaryField
 {
-    slag
-    {
-        type            wallHeatTransfer;
-        Tinf            uniform 1773;
-        alphaWall       uniform 0;
-        value           uniform 1773;
-    }
+    
     outlet
     {
         type            zeroGradient;

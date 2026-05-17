@@ -28,10 +28,9 @@ mixture
         nMoles          1;
         molWeight       18.0153;
     }
-    // 🚨 기체도 똑같이 thermodynamics로 감싸주기!
     thermodynamics
     {
-        Cp              2000;
+        Cp              6.44e6;
         Hf              2.5e6;
     }
     transport
