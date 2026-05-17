@@ -11,18 +11,33 @@ FoamFile
     format      ascii;
     arch        "LSB;label=32;scalar=64";
     class       polyBoundaryMesh;
-    location    "constant/polyMesh";
+    location    "2e-05/polyMesh";
     object      boundary;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-1
+3
 (
-    allBoundary
+    outlet
     {
-        type            patch;
-        nFaces          8400;
-        startFace       144300;
+        type            wall;
+        inGroups        1(wall);
+        nFaces          844;
+        startFace       288168;
+    }
+    inlet
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          1184;
+        startFace       289012;
+    }
+    wall
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          32720;
+        startFace       290196;
     }
 )
 

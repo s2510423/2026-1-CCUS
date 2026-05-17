@@ -10,20 +10,22 @@ FoamFile
     version     2.0;
     format      ascii;
     arch        "LSB;label=32;scalar=64";
-    class       polyBoundaryMesh;
-    location    "constant/polyMesh";
-    object      boundary;
+    class       regIOobject;
+    location    "2e-05/polyMesh";
+    object      pointZones;
+    meta
+    {
+        names           1 ( frozenPoints );
+    }
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 1
-(
-    allBoundary
-    {
-        type            patch;
-        nFaces          8400;
-        startFace       144300;
-    }
+(frozenPoints
+{
+    type            pointZone;
+    pointLabels     List<label> 0();
+}
 )
 
 // ************************************************************************* //
