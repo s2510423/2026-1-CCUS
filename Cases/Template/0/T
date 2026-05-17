@@ -22,5 +22,14 @@ boundaryField
     inlet  { type fixedValue; value uniform 350; } // 대략 상온
     outlet { type zeroGradient; }
     wall   { type zeroGradient; }
-    slag   { type fixedValue; value uniform 1773; } // 섭씨 약 1500도
+    slag
+{
+    // 🚨 오픈폼 v2312에서 가장 깔끔하게 숫자를 받아먹는 열전달 경계조건
+    type            wallHeatTransfer;
+    alphaWall       uniform 0;           // 상분율 필드 이름 지정
+    Tinf            uniform 1773;          // 슬래그 내부 초기 온도 (1500도)
+    h               uniform 6.0;           // 🔥 kappa(0.3) / 두께(0.05) 계산한 값!
+    
+    value           uniform 1773;
+}
 }
