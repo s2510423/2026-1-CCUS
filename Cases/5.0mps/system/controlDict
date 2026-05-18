@@ -44,8 +44,8 @@ runTimeModifiable true;
 
 adjustTimeStep  yes;
 
-maxCo           0.2;
-maxAlphaCo      0.2;
+maxCo           0.05;
+maxAlphaCo      0.05;
 maxDeltaT       1;
 
 functions
@@ -83,6 +83,26 @@ functions
         // OpenFOAM 런타임에서 필드 가중치 처리가 안 될 경우, 
         // 나중에 postProcess -func "weightedSum(phi, alpha.water)" 형태로 보완 가능합니다.
         // 우선은 phi(전체 질량)라도 정확히 뽑히는지 보겠습니다.
+    }
+    clipTemperature
+    {
+        type            codedFunctionObject;
+        libs            (utilityFunctionObjects);
+        name            clipT;
+        executeControl  timeStep;
+        writeControl    none;
+        
+        codeExecute
+        #{
+            volScalarField& T = const_cast<volScalarField&>(mesh().lookupObject<volScalarField>("T"));
+            forAll(T, celli)
+            {
+                if (T[celli] < 200.0)
+                {
+                    T[celli] = 300.0; // 200K 밑으로 떨어지는 격자가 있으면 무조건 300K로 강제 이식!!
+                }
+            }
+        #};
     }
 }
 

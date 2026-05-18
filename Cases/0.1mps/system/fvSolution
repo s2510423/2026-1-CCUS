@@ -10,8 +10,8 @@ solvers
 {
     "alpha.*"
     {
-        nAlphaCorr      2;
-        nAlphaSubCycles 2;
+        nAlphaCorr      4;
+        nAlphaSubCycles 4;
         cAlpha          1;
     }
 
