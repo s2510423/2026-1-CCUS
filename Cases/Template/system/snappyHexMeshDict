@@ -47,15 +47,15 @@ castellatedMeshControls
     {
         wall
         {
-            level (1 2);
+            level (3 4);
         }
         outlet
         {
-            level (0 1);
+            level (1 2);
         }
         inlet
         {
-            level (0 1);
+            level (1 2);
         }
     }
 

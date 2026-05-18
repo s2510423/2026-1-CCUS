@@ -1,41 +1,42 @@
 /*--------------------------------*- C++ -*----------------------------------*\
-  =========                 |
-  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
-   \\    /   O peration     | Website:  https://openfoam.org
-    \\  /    A nd           | Version:  2312
-     \\/     M anipulation  |
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2312                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
 FoamFile
 {
     version     2.0;
     format      ascii;
+    arch        "LSB;label=32;scalar=64";
     class       volScalarField;
-    object      T;
+    location    "0";
+    object      T.water;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 dimensions      [0 0 0 1 0 0 0];
 
-// 💡 내부 전체 온도를 300K로 싹 통일해서 솔버 평화주의 구역 선포
 internalField   uniform 300;
 
 boundaryField
 {
-    inlet
-    {
-        type            fixedValue;
-        value           uniform 300;
-    }
-
+    
     outlet
     {
         type            zeroGradient;
     }
-
+    inlet
+    {
+        type            fixedValue;
+        value           uniform 350;
+    }
     wall
     {
-        type            zeroGradient; // 또는 fixedValue; value uniform 300;
+        type            zeroGradient;
     }
 }
+
 
 // ************************************************************************* //

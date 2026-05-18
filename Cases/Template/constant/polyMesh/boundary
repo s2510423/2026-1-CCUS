@@ -22,22 +22,22 @@ FoamFile
     {
         type            wall;
         inGroups        1(wall);
-        nFaces          136;
-        startFace       64584;
+        nFaces          296;
+        startFace       263746;
     }
     inlet
     {
         type            wall;
         inGroups        1(wall);
-        nFaces          72;
-        startFace       64720;
+        nFaces          308;
+        startFace       264042;
     }
     wall
     {
         type            wall;
         inGroups        1(wall);
-        nFaces          7240;
-        startFace       64792;
+        nFaces          31448;
+        startFace       264350;
     }
 )
 
