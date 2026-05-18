@@ -10,12 +10,22 @@ FoamFile
     version     2.0;
     format      ascii;
     arch        "LSB;label=32;scalar=64";
-    class       dictionary;
-    location    "system";
-    object      decomposeParDict;
+    class       regIOobject;
+    location    "constant/polyMesh";
+    object      pointZones;
+    meta
+    {
+        names           1 ( frozenPoints );
+    }
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-numberOfSubdomains 10;
+1
+(frozenPoints
+{
+    type            pointZone;
+    pointLabels     List<label> 0();
+}
+)
 
-method scotch;
+// ************************************************************************* //

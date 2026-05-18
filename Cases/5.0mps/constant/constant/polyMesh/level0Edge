@@ -10,12 +10,15 @@ FoamFile
     version     2.0;
     format      ascii;
     arch        "LSB;label=32;scalar=64";
-    class       dictionary;
-    location    "system";
-    object      decomposeParDict;
+    class       uniformDimensionedScalarField;
+    location    "constant/polyMesh";
+    object      level0Edge;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-numberOfSubdomains 10;
+dimensions      [0 1 0 0 0 0 0];
+value           2;
 
-method scotch;
+
+
+// ************************************************************************* //

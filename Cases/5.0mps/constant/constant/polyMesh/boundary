@@ -10,12 +10,35 @@ FoamFile
     version     2.0;
     format      ascii;
     arch        "LSB;label=32;scalar=64";
-    class       dictionary;
-    location    "system";
-    object      decomposeParDict;
+    class       polyBoundaryMesh;
+    location    "constant/polyMesh";
+    object      boundary;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-numberOfSubdomains 10;
+3
+(
+    outlet
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          248;
+        startFace       62262;
+    }
+    inlet
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          92;
+        startFace       62510;
+    }
+    wall
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          8028;
+        startFace       62602;
+    }
+)
 
-method scotch;
+// ************************************************************************* //
