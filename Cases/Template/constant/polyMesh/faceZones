@@ -11,7 +11,7 @@ FoamFile
     format      ascii;
     arch        "LSB;label=32;scalar=64";
     class       regIOobject;
-    location    "1e-05/polyMesh";
+    location    "constant/polyMesh";
     object      faceZones;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
