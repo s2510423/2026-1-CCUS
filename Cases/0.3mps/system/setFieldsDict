@@ -23,7 +23,7 @@ regions
 (
     boxToCell
     {
-        box (-2 -2 0) (2 2 1); 
+        box (-0.2 -0.2 0) (0.2 0.2 0.1); 
         fieldValues
         (
             volScalarField T 1773          // 슬래그 온도는 1773K 고온!

@@ -29,21 +29,22 @@ castellatedMeshControls
     maxLoadUnbalance 0.10;
     nCellsBetweenLevels 2;
 
+    
     features
     (
-        { file "outlet.eMesh"; level 2; }
-        { file "inlet.eMesh";  level 2; }
-        { file "wall.eMesh";   level 3; }
+        // 💡 레벨을 전부 1단계씩 낮춰서 격자 크기를 2배 이상 키워버려!
+        { file "outlet.eMesh"; level 1; } // (기존 2)
+        { file "inlet.eMesh";  level 1; } // (기존 2)
+        { file "wall.eMesh";   level 2; } // (기존 3)
     );
-
     resolveFeatureAngle 30;
-
     refinementSurfaces
     {
-        wall   { level (3 4); }
-        outlet { level (2 3); }
-        inlet  { level (2 3); }
+        wall   { level (2 3); } // 💡 (기존 3 4) -> 벽면 격자 크기를 확 키운다!
+        outlet { level (1 2); } // 💡 (기존 2 3)
+        inlet  { level (1 2); } // 💡 (기존 2 3)
     }
+
 
     refinementRegions {}
     locationInMesh (0 0 10); 

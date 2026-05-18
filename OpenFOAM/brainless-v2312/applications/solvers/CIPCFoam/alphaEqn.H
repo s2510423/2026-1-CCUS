@@ -95,11 +95,19 @@
     {
         phiCN = cnCoeff*phi + (1.0 - cnCoeff)*phi.oldTime();
     }
-
     if (MULESCorr)
     {
         #include "alphaSuSp.H"
         volScalarField LeeSp = mDot / rho1;
+
+        // 💡 수치 폭발 방지용 안전 필드 선언
+        volScalarField LeeSp_pos = max(LeeSp, dimensionedScalar("0", LeeSp.dimensions(), 0.0));
+        volScalarField LeeSp_neg = max(-LeeSp, dimensionedScalar("0", LeeSp.dimensions(), 0.0));
+
+        // 💡 [수정] tmp 객체 내부의 실제 필드 값을 꺼내기 위해 괄호 () 연산자 사용
+        // 오픈폼 v2312에서 tmp<volScalarField>의 알맹이를 꺼내 Su에 더하는 가장 확실한 방법이야.
+        Su += (LeeSp_neg * alpha1)(); 
+
         fvScalarMatrix alpha1Eqn
         (
             (
@@ -113,10 +121,9 @@
                 phiCN,
                 upwind<scalar>(mesh, phiCN)
             ).fvmDiv(phiCN, alpha1)
-       // - fvm::Sp(fvc::ddt(dimensionedScalar("1", dimless, 1), mesh)
-       //           + fvc::div(phiCN), alpha1)
          ==
-            Su + fvm::Sp(Sp + divU - LeeSp, alpha1)
+            Su
+          + fvm::Sp(Sp + divU - LeeSp_pos, alpha1)
         );
 
         alpha1Eqn.solve();
