@@ -1,0 +1,51 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2312                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=32;scalar=64";
+    class       dictionary;
+    location    "3.600138963991879/uniform/functionObjects";
+    object      functionObjectProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+cdf7e925f5746741c316f5fbcf39ad0dfca90775
+{
+    wallPressureMax
+    {
+        scalar
+        {
+            min(p_rgh)      83553.87823077006;
+            max(p_rgh)      164617.2104269865;
+        }
+        label
+        {
+            min(p_rgh)_cell 223;
+            min(p_rgh)_processor 2;
+            max(p_rgh)_cell 217;
+            max(p_rgh)_processor 2;
+        }
+        vector
+        {
+            min(p_rgh)_position ( 3.15985 -1.17861 2.78585 );
+            max(p_rgh)_position ( 2.92014 -1.88651 2.78996 );
+        }
+    }
+    outletWaterMass
+    {
+        scalar
+        {
+            sum(outlet,phi) 71.2448714308703;
+        }
+    }
+}
+
+
+// ************************************************************************* //

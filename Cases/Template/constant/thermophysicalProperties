@@ -17,6 +17,6 @@ phases  (water gas);
 phaseChangeModel Lee;
 LeeCoeffs
 {
-    r       0.01;
+    r       0.0001;
     Tsat    373.15;
 }
