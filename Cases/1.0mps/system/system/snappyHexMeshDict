@@ -1,0 +1,85 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      snappyHexMeshDict;
+}
+
+castellatedMesh true;
+snap            true;
+addLayers       false; 
+
+geometry
+{
+    outlet.stl { type triSurfaceMesh; name outlet; }
+    inlet.stl  { type triSurfaceMesh; name inlet; }
+    wall.stl   { type triSurfaceMesh; name wall; }
+};
+
+castellatedMeshControls
+{
+    maxLocalCells 500000;
+    maxGlobalCells 1000000;
+    minRefinementCells 10;
+    maxLoadUnbalance 0.10;
+    nCellsBetweenLevels 2;
+
+    
+    features
+    (
+        // 💡 레벨을 전부 1단계씩 낮춰서 격자 크기를 2배 이상 키워버려!
+        { file "outlet.eMesh"; level 1; } // (기존 2)
+        { file "inlet.eMesh";  level 1; } // (기존 2)
+        { file "wall.eMesh";   level 2; } // (기존 3)
+    );
+    resolveFeatureAngle 30;
+    refinementSurfaces
+    {
+        wall   { level (2 3); } // 💡 (기존 3 4) -> 벽면 격자 크기를 확 키운다!
+        outlet { level (1 2); } // 💡 (기존 2 3)
+        inlet  { level (1 2); } // 💡 (기존 2 3)
+    }
+
+
+    refinementRegions {}
+    locationInMesh (0 0 10); 
+    allowFreeStandingZoneFaces true;
+}
+
+snapControls
+{
+    nSmoothPatch 3;  
+    tolerance 1.0;   // 💡 벽면에 과도하게 격자를 잡아당겨서 찌그러뜨리는 현상 방지
+    nSolveIter 30;   // 💡 정렬 정밀도 상향
+    nRelaxIter 8;
+}
+
+addLayersControls {}
+
+meshQualityControls
+{
+    maxNonOrtho         65;  // 💡 압축성 솔버가 버틸 수 있는 최대 한계선인 65도로 제한
+    maxBoundarySkewness 4.0; // 💡 벽면 왜곡 격자 생성 엄격히 제한
+    maxInternalSkewness 2.0; 
+    maxConcave          80;    
+    minVol              1e-12; // 💡 부피가 0에 가깝게 짜부라져 divide 에러 나는 것 원천 차단
+    minTetQuality       1e-15; // 💡 뒤집힌 썩은 격자 차단
+    
+    minTwist            0.02;    
+    minTriangleTwist    -1;    
+    minFlatness         0.5;    
+    minFaceWeight       0.02;
+    minVolRatio         0.01;
+    minDeterminant      0.001;
+    minArea             -1;
+
+    nSmoothScale        4;    
+    errorReduction      0.75;
+}
+
+mergeTolerance 1e-6;

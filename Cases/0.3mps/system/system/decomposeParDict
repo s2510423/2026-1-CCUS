@@ -10,32 +10,12 @@ FoamFile
     version     2.0;
     format      ascii;
     arch        "LSB;label=32;scalar=64";
-    class       volScalarField;
-    location    "0";
-    object      T;
+    class       dictionary;
+    location    "system";
+    object      decomposeParDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 0 0 1 0 0 0];
+numberOfSubdomains 10;
 
-internalField   uniform 300;
-
-boundaryField
-{
-    outlet
-    {
-        type            zeroGradient;
-    }
-    inlet
-    {
-        type            fixedValue;
-        value           uniform 350;
-    }
-    wall
-    {
-        type            zeroGradient;
-    }
-}
-
-
-// ************************************************************************* //
+method scotch;

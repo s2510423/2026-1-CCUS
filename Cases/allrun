@@ -2,3 +2,4 @@ cd ~/2026-1-CCUS/Cases/0.5mps && setFields && decomposePar && mpirun -np 10 CIPC
 cd ~/2026-1-CCUS/Cases/5.0mps && setFields && decomposePar && mpirun -np 10 CIPCFoam -parallel > log.CIPCFoam 2>&1s
 cd ~/2026-1-CCUS/Cases/1.0mps && setFields && decomposePar && mpirun -np 10 CIPCFoam -parallel > log.CIPCFoam 2>&1s
 cd ~/2026-1-CCUS/Cases/0.1mps && setFields && decomposePar && mpirun -np 10 CIPCFoam -parallel > log.CIPCFoam 2>&1s
+cd ~/2026-1-CCUS/Cases/
