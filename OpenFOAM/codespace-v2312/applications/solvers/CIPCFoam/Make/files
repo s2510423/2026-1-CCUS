@@ -1,3 +1,0 @@
-CIPCFoam.C
-
-EXE = $(WM_PROJECT_USER_DIR)/platforms/$(WM_OPTIONS)/bin/CIPCFoam
