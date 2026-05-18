@@ -1,0 +1,105 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  2312
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      snappyHexMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+castellatedMesh true;
+snap            true;
+addLayers       false; // ⚠️ 극한 조밀도에서 레이어까지 켜면 성유물 PC 진짜 터집니다. 우선 격자만 조집니다.
+
+geometry
+{
+    outlet.stl { type triSurfaceMesh; name outlet; }
+    inlet.stl  { type triSurfaceMesh; name inlet; }
+    wall.stl   { type triSurfaceMesh; name wall; }
+};
+
+castellatedMeshControls
+{
+    // 💡 고해상도 격자를 버티기 위해 메모리 한계치를 빵빵하게 뚫어줍니다.
+    maxLocalCells 8000000;
+    maxGlobalCells 15000000;
+    minRefinementCells 10;
+    maxLoadUnbalance 0.10;
+    nCellsBetweenLevels 2; // 격자가 급격하게 작아질 때 중간 완충 지대 생성
+
+    features
+    (
+        // 💡 특징선(모서리)도 칼날처럼 서게 레벨 4로 격상
+        { file "outlet.eMesh"; level 3; }
+        { file "inlet.eMesh";  level 3; }
+        { file "wall.eMesh";   level 4; }
+    );
+
+    resolveFeatureAngle 30;
+
+    refinementSurfaces
+    {
+        wall
+        {
+            level (4 5);
+        }
+        outlet
+        {
+            level (3 4);
+        }
+        inlet
+        {
+            level (3 4);
+        }
+    }
+
+    refinementRegions {}
+
+    locationInMesh (0 0 10); 
+
+    allowFreeStandingZoneFaces true;
+}
+
+snapControls
+{
+    nSmoothPatch 3;  
+    tolerance 2.0;   
+    nSolveIter 30;   // 조밀한 격자일수록 스냅을 많이 돌려야 형상에 딱 붙습니다.
+    nRelaxIter 5;
+}
+
+addLayersControls {}
+
+meshQualityControls
+{
+    // 💡 격자는 촘촘하게 깎되, 품질 검사는 프리패스 시켜서 스내피가 연산 중간에 안 도망치게 락(Lock)을 겁니다.
+    maxNonOrtho         75; // 고해상도 격자의 비직교성을 감안해 75도로 완화
+    maxBoundarySkewness 100;
+    maxInternalSkewness 100;
+    maxConcave          100;
+    minVol              1e-30;
+    minTetQuality       -1e30;
+    minArea             -1;
+    
+    minTwist            -1;    
+    minTriangleTwist    -1;    
+    minFlatness         -1;    
+    
+    minFaceWeight       1e-6;
+    minVolRatio         1e-6;
+    minDeterminant      1e-6;
+
+    nSmoothScale        4;    
+    errorReduction      0.75;
+}
+
+mergeTolerance 1e-6;
+
+// ************************************************************************* //

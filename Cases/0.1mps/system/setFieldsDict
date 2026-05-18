@@ -1,0 +1,33 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  2312
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      setFieldsDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+defaultFieldValues
+(
+    volScalarField T 300          // 대충 실온
+    volScalarField alpha.water 0  // 기본은온 텅 빔
+);
+
+regions
+(
+    boxToCell
+    {
+        box (-2 -2 0) (2 2 1); 
+        fieldValues
+        (
+            volScalarField T 1773          // 슬래그 온도는 1773K 고온!
+            volScalarField alpha.water 0     // 여기도 물이 없음 (슬래그 가스 역할)
+        );
+    }
+);

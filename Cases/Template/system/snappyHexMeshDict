@@ -20,7 +20,6 @@ addLayers       false; // ⚠️ 극한 조밀도에서 레이어까지 켜면 �
 
 geometry
 {
-    slag.stl   { type triSurfaceMesh; name slag; }
     outlet.stl { type triSurfaceMesh; name outlet; }
     inlet.stl  { type triSurfaceMesh; name inlet; }
     wall.stl   { type triSurfaceMesh; name wall; }
@@ -29,49 +28,39 @@ geometry
 castellatedMeshControls
 {
     // 💡 고해상도 격자를 버티기 위해 메모리 한계치를 빵빵하게 뚫어줍니다.
-    maxLocalCells 8000000;
-    maxGlobalCells 15000000;
+    maxLocalCells 500000;
+    maxGlobalCells 1000000;
     minRefinementCells 10;
     maxLoadUnbalance 0.10;
     nCellsBetweenLevels 2; // 격자가 급격하게 작아질 때 중간 완충 지대 생성
 
     features
     (
-        // 💡 특징선(모서리)도 칼날처럼 서게 레벨 4로 격상
-        { file "slag.eMesh";   level 4; }
-        { file "outlet.eMesh"; level 2; }
-        { file "inlet.eMesh";  level 2; }
-        { file "wall.eMesh";   level 3; }
+        { file "outlet.eMesh"; level 1; }
+        { file "inlet.eMesh";  level 1; }
+        { file "wall.eMesh";   level 2; }
     );
 
     resolveFeatureAngle 30;
 
     refinementSurfaces
     {
-        // 🔥 슬래그 근처는 거의 현미경 수준(레벨 4~5)으로 극한 조밀화
-        slag
-        {
-            level (4 5); 
-        }
-        // 🔥 폭발 압력을 견뎌야 하는 벽면도 촘촘하게 레벨 3~4 세팅
         wall
         {
-            level (3 4);
+            level (1 2);
         }
-        // 입출구는 연산력 아끼기 위해 기본 유지
         outlet
         {
-            level (2 2);
+            level (0 1);
         }
         inlet
         {
-            level (2 2);
+            level (0 1);
         }
     }
 
     refinementRegions {}
 
-    // ⚠️ 최고 중요: 이 좌표가 실린더 내부 공중(유체 영역)에 정확히 떠 있어야 코어 덤프 안 납니다!
     locationInMesh (0 0 10); 
 
     allowFreeStandingZoneFaces true;
@@ -81,7 +70,7 @@ snapControls
 {
     nSmoothPatch 3;  
     tolerance 2.0;   
-    nSolveIter 30;   // 조밀한 격자일수록 스냅을 많이 돌려야 형상에 딱 붙습니다.
+    nSolveIter 10;
     nRelaxIter 5;
 }
 
