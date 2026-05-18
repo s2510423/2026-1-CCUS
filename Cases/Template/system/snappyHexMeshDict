@@ -1,9 +1,6 @@
 /*--------------------------------*- C++ -*----------------------------------*\
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
-   \\    /   O peration     | Website:  https://openfoam.org
-    \\  /    A nd           | Version:  2312
-     \\/     M anipulation  |
 \*---------------------------------------------------------------------------*/
 FoamFile
 {
@@ -12,11 +9,11 @@ FoamFile
     class       dictionary;
     object      snappyHexMeshDict;
 }
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 castellatedMesh true;
 snap            true;
 addLayers       false; 
+
 geometry
 {
     outlet.stl { type triSurfaceMesh; name outlet; }
@@ -26,12 +23,11 @@ geometry
 
 castellatedMeshControls
 {
-    // 💡 고해상도 격자를 버티기 위해 메모리 한계치를 빵빵하게 뚫어줍니다.
     maxLocalCells 500000;
     maxGlobalCells 1000000;
     minRefinementCells 10;
     maxLoadUnbalance 0.10;
-    nCellsBetweenLevels 2; // 격자가 급격하게 작아질 때 중간 완충 지대 생성
+    nCellsBetweenLevels 2;
 
     features
     (
@@ -44,60 +40,45 @@ castellatedMeshControls
 
     refinementSurfaces
     {
-        wall
-        {
-            level (3 4);
-        }
-        outlet
-        {
-            level (2 3);
-        }
-        inlet
-        {
-            level (2 3);
-        }
+        wall   { level (3 4); }
+        outlet { level (2 3); }
+        inlet  { level (2 3); }
     }
 
     refinementRegions {}
-
     locationInMesh (0 0 10); 
-
     allowFreeStandingZoneFaces true;
 }
 
 snapControls
 {
     nSmoothPatch 3;  
-    tolerance 2.0;   
-    nSolveIter 10;
-    nRelaxIter 5;
+    tolerance 1.0;   // 💡 벽면에 과도하게 격자를 잡아당겨서 찌그러뜨리는 현상 방지
+    nSolveIter 30;   // 💡 정렬 정밀도 상향
+    nRelaxIter 8;
 }
 
 addLayersControls {}
 
 meshQualityControls
 {
-    // 💡 격자는 촘촘하게 깎되, 품질 검사는 프리패스 시켜서 스내피가 연산 중간에 안 도망치게 락(Lock)을 겁니다.
-    maxNonOrtho         75; // 고해상도 격자의 비직교성을 감안해 75도로 완화
-    maxBoundarySkewness 100;
-    maxInternalSkewness 100;
-    maxConcave          100;
-    minVol              1e-30;
-    minTetQuality       -1e30;
-    minArea             -1;
+    maxNonOrtho         65;  // 💡 압축성 솔버가 버틸 수 있는 최대 한계선인 65도로 제한
+    maxBoundarySkewness 4.0; // 💡 벽면 왜곡 격자 생성 엄격히 제한
+    maxInternalSkewness 2.0; 
+    maxConcave          80;    
+    minVol              1e-12; // 💡 부피가 0에 가깝게 짜부라져 divide 에러 나는 것 원천 차단
+    minTetQuality       1e-15; // 💡 뒤집힌 썩은 격자 차단
     
-    minTwist            -1;    
+    minTwist            0.02;    
     minTriangleTwist    -1;    
-    minFlatness         -1;    
-    
-    minFaceWeight       1e-6;
-    minVolRatio         1e-6;
-    minDeterminant      1e-6;
+    minFlatness         0.5;    
+    minFaceWeight       0.02;
+    minVolRatio         0.01;
+    minDeterminant      0.001;
+    minArea             -1;
 
     nSmoothScale        4;    
     errorReduction      0.75;
 }
 
 mergeTolerance 1e-6;
-
-// ************************************************************************* //

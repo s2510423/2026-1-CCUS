@@ -44,9 +44,9 @@ runTimeModifiable true;
 
 adjustTimeStep  yes;
 
-maxCo           0.1;
-maxAlphaCo      0.1;
-maxDeltaT       0.01; // 💡 아까 온도 튀는 거 방지용 안전 브레이크
+maxCo           0.05;
+maxAlphaCo      0.05;
+maxDeltaT       1e-04; // 💡 아까 온도 튀는 거 방지용 안전 브레이크
 
 functions
 {

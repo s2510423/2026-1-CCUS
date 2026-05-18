@@ -54,16 +54,9 @@ relaxationFactors
     }
     equations
     {
-        "U.*"               0.3;
-        "T.*"               0.3;
-        "k.*"               0.3;
-        "omega.*"           0.3;
+        "U.*"               0.5;
+        "T.*"               0.5;
+        "k.*"               0.7;
+        "omega.*"           0.7;
     }
-}
-
-
-MULES
-{
-    nAlphaCorr      3;  // 💡 알파 보정 횟수를 3회로 늘려서 수치적 오차 완벽 차단
-    nAlphaSubCycles 2;  // 💡 한 타임스텝 안에서 알파만 2번 더 쪼개서 풀기 (방어력 200% 상승)
 }

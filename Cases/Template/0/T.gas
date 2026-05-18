@@ -22,7 +22,6 @@ internalField   uniform 300;
 
 boundaryField
 {
-    
     outlet
     {
         type            zeroGradient;
