@@ -16,8 +16,7 @@ FoamFile
 
 castellatedMesh true;
 snap            true;
-addLayers       false; // ⚠️ 극한 조밀도에서 레이어까지 켜면 성유물 PC 진짜 터집니다. 우선 격자만 조집니다.
-
+addLayers       false; 
 geometry
 {
     outlet.stl { type triSurfaceMesh; name outlet; }
@@ -36,9 +35,9 @@ castellatedMeshControls
 
     features
     (
-        { file "outlet.eMesh"; level 1; }
-        { file "inlet.eMesh";  level 1; }
-        { file "wall.eMesh";   level 2; }
+        { file "outlet.eMesh"; level 2; }
+        { file "inlet.eMesh";  level 2; }
+        { file "wall.eMesh";   level 3; }
     );
 
     resolveFeatureAngle 30;
@@ -51,11 +50,11 @@ castellatedMeshControls
         }
         outlet
         {
-            level (1 2);
+            level (2 3);
         }
         inlet
         {
-            level (1 2);
+            level (2 3);
         }
     }
 
